@@ -1,0 +1,82 @@
+{
+  "suggest.removeDuplicateItems": true,
+  "suggest.completionItemKindLabels": {
+    "class": "\uf0e8",
+    "color": "\ue22b",
+    "constant": "\uf8fe",
+    "default": "\uf29c",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "event": "\ufacd",
+    "field": "\uf9be",
+    "file": "\uf723",
+    "folder": "\uf114",
+    "function": "\u0192",
+    "interface": "\uf417",
+    "keyword": "\uf1de",
+    "method": "\uf09a",
+    "module": "\uf40d",
+    "operator": "\u03a8",
+    "property": "\ue624",
+    "reference": "\ufa46",
+    "snippet": "\ue60b",
+    "struct": "\ufb44",
+    "text": "\ue612",
+    "typeParameter": "\uf728",
+    "unit": "\uf475",
+    "value": "\uf89f",
+    "variable": "\ue79b"
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
+    "go",
+    "json",
+    "yaml"
+  ],
+  "list.height": 12,
+  "list.interactiveDebounceTime": 10,
+  "list.normalMappings": {
+    "t": "action:tabe",
+    "v": "action:vsplit",
+    "s": "action:split",
+    "d": "expr:GetDeleteAction",
+    "q": "do:exit",
+    "<C-j>": "normal:j",
+    "<C-k>": "normal:k",
+    "<C-c>": "do:exit"
+  },
+  "list.insertMappings": {
+    "<C-t>": "action:tabe",
+    "<C-v>": "action:vsplit",
+    "<C-x>": "action:split",
+    "<C-j>": "normal:j",
+    "<C-k>": "normal:k",
+    "<C-c>": "do:exit"
+  },
+  "list.source.files.defaultArgs": [
+    "--files",
+    "--hidden"
+  ],
+  "list.source.grep.defaultOptions": [
+    "--interactive",
+    "--auto-preview"
+  ],
+  "git.enableGutters": true,
+  "translator.toLang": "ja",
+  "translator.engines": [
+    "google"
+  ],
+  "go.goplsOptions": {
+    "usePlaceholders": true,
+    "gofumpt": true,
+    "semanticTokens": true,
+    "staticcheck": true,
+    "codelenses": {
+      "generate": true
+    }
+  },
+  "yaml.format.enable": true,
+  "yaml.format.singleQuote": true,
+  "yaml.schemas": {
+    "http://json.schemastore.org/cloudbuild": "/cloudbuild*.yaml"
+  }
+}
