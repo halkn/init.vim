@@ -29,7 +29,7 @@
   },
   "coc.preferences.formatOnSaveFiletypes": [
     "go",
-    "json",
+    "jsonc",
     "yaml"
   ],
   "list.height": 12,
@@ -60,6 +60,7 @@
     "--interactive",
     "--auto-preview"
   ],
+  "list.previewSplitRight": true,
   "git.enableGutters": true,
   "translator.toLang": "ja",
   "translator.engines": [

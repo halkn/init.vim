@@ -364,6 +364,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'machakann/vim-swap'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-operator-replace'
+Plug 'lambdalisue/pastefix.vim'
 " coc.nvim
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Extension
@@ -416,39 +417,45 @@ augroup END
 colorscheme nvcode
 
 " lualine.nvim
-let g:lualine = {
-\ 'options': {
-\   'theme': 'codedark',
-\   'section_separators' : ['', ''],
-\   'component_separators' : ['', ''],
-\   'icons_enabled': v:false,
-\ },
-\ 'sections' : {
-\   'lualine_a' : [ ['mode', {'upper': v:true,},], ],
-\   'lualine_b' : [ ['branch', {'icon': '', 'icons_enabled': v:true}, ], ],
-\   'lualine_c' : [ ['filename', {'file_status': v:true,},],
-\                   ['diff'], 
-\                   ['diagnostics', { 
-\                     'sources': ['coc'],
-\                     'icons_enabled': v:false,
-\                     'symbols': {'error': '×:', 'warn': '⚠:', 'info': 'Ⓘ:'}
-\                   }]
-\                 ],
-\   'lualine_x' : [ 'encoding', 'fileformat', 'filetype' ],
-\   'lualine_y' : [ 'progress' ],
-\   'lualine_z' : [ 'location' ],
-\ },
-\ 'inactive_sections' : {
-\   'lualine_a' : [  ],
-\   'lualine_b' : [  ],
-\   'lualine_c' : [ 'filename' ],
-\   'lualine_x' : [ 'location' ],
-\   'lualine_y' : [  ],
-\   'lualine_z' : [  ],
-\ },
-\ 'extensions' : [ 'fzf' ],
-\ }
-lua require("lualine").setup()
+lua << EOF
+require'lualine'.setup {
+  options = {
+    icons_enabled = false,
+    theme = 'codedark',
+    component_separators = '',
+    section_separators = '',
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = { {'branch', icon = '', icons_enabled = true} },
+    lualine_c = {
+      {'filename'},
+      {'diff'},
+      {'diagnostics', 
+        sources = {'coc'},
+        color_error = '#bf616a',
+        color_warn = '#ebcb8b',
+        color_info = '#88c0d0',
+        symbols = {error = '×:', warn = '⚠:', info = 'Ⓘ:'}
+      },
+    },
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
+EOF
 
 " vim-eft
 nmap ; <Plug>(eft-repeat)
@@ -528,7 +535,6 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 augroup vimrc_coc
   autocmd!
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup END
 
@@ -537,10 +543,18 @@ nnoremap <LocalLeader>d <cmd>CocList diagnostics<CR>
 nnoremap <LocalLeader>s <cmd>CocList outline<CR>
 nnoremap <LocalLeader>w <cmd>CocList symbols<CR>
 
+inoremap <silent><expr> <C-x><C-o> coc#refresh()
+
 " coc-lists
 nnoremap <Leader>f <cmd>CocList files<CR>
-nnoremap <Leader>b <cmd>CocList buffers<CR>
+nnoremap <Leader>b <cmd>CocList --normal buffers<CR>
 nnoremap <Leader>l <cmd>CocList lines<CR>
+function s:grep() abort
+  let l:query = input('Grep: ', '')
+  if empty(l:query) | redraw | return | endif
+  execute 'CocList -N --normal grep ' l:query
+endfunction
+nnoremap <Leader>a <cmd>call <SID>grep()<CR>
 
 " coc-pairs
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
